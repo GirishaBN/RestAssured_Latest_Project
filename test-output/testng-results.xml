@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
+<testng-results ignored="1" total="2" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-08-06T17:08:36 IST" name="Default suite" finished-at="2026-08-06T17:08:38 IST" duration-ms="1280">
+  <suite started-at="2026-08-06T22:36:11 IST" name="Default suite" finished-at="2026-08-06T22:36:12 IST" duration-ms="1349">
     <groups>
+      <group name="regression">
+        <method signature="UserTest.createUser_shouldReturnCreatedUser()[pri:0, instance:tests.UserTest@50de186c]" name="createUser_shouldReturnCreatedUser" class="tests.UserTest"/>
+      </group> <!-- regression -->
       <group name="smoke">
-        <method signature="UserTest.getUser_shouldReturnSucess()[pri:0, instance:tests.UserTest@37e4d7bb]" name="getUser_shouldReturnSucess" class="tests.UserTest"/>
+        <method signature="UserTest.createUser_shouldReturnCreatedUser()[pri:0, instance:tests.UserTest@50de186c]" name="createUser_shouldReturnCreatedUser" class="tests.UserTest"/>
       </group> <!-- smoke -->
     </groups>
-    <test started-at="2026-08-06T17:08:36 IST" name="Default test" finished-at="2026-08-06T17:08:38 IST" duration-ms="1280">
+    <test started-at="2026-08-06T22:36:11 IST" name="Default test" finished-at="2026-08-06T22:36:12 IST" duration-ms="1349">
       <class name="tests.UserTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.UserTest@37e4d7bb]" started-at="2026-08-06T17:08:36 IST" name="setup" description="Verify user can be retrieved by ID" finished-at="2026-08-06T17:08:36 IST" duration-ms="21" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tests.UserTest@50de186c]" started-at="2026-08-06T22:36:11 IST" name="setup" finished-at="2026-08-06T22:36:11 IST" duration-ms="345" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="getUser_shouldReturnSucess()[pri:0, instance:tests.UserTest@37e4d7bb]" started-at="2026-08-06T17:08:36 IST" name="getUser_shouldReturnSucess" finished-at="2026-08-06T17:08:37 IST" duration-ms="1154" status="FAIL">
-          <exception class="java.lang.IllegalArgumentException">
+        <test-method is-config="true" signature="setupUserService()[pri:0, instance:tests.UserTest@50de186c]" started-at="2026-08-06T22:36:11 IST" name="setupUserService" description="Verify user can be retrieved by ID" finished-at="2026-08-06T22:36:11 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupUserService -->
+        <test-method signature="createUser_shouldReturnCreatedUser()[pri:0, instance:tests.UserTest@50de186c]" started-at="2026-08-06T22:36:11 IST" name="createUser_shouldReturnCreatedUser" finished-at="2026-08-06T22:36:12 IST" duration-ms="972" status="FAIL">
+          <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[Specification to merge with cannot be null]]>
+              <![CDATA[expected [201] but found [401]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.IllegalArgumentException: Specification to merge with cannot be null
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.reflection.CachedConstructor.doConstructorInvoke(CachedConstructor.java:60)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrap.callConstructor(ConstructorSite.java:86)
-at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:263)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.common.assertion.AssertParameter.notNull(AssertParameter.groovy:26)
-at io.restassured.internal.common.assertion.AssertParameter$notNull.callStatic(Unknown Source)
-at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallStatic(CallSiteArray.java:53)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:217)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:240)
-at io.restassured.internal.SpecificationMerger.merge(SpecificationMerger.groovy:94)
-at io.restassured.internal.SpecificationMerger$merge.call(Unknown Source)
-at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:148)
-at io.restassured.internal.RequestSpecificationImpl.spec(RequestSpecificationImpl.groovy:944)
-at framework.service.UserService.getUsers(UserService.java:19)
-at tests.UserTest.getUser_shouldReturnSucess(UserTest.java:21)
+              <![CDATA[java.lang.AssertionError: expected [201] but found [401]
+at org.testng.Assert.fail(Assert.java:111)
+at org.testng.Assert.failNotEquals(Assert.java:1590)
+at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+at org.testng.Assert.assertEquals(Assert.java:132)
+at org.testng.Assert.assertEquals(Assert.java:1431)
+at org.testng.Assert.assertEquals(Assert.java:1395)
+at org.testng.Assert.assertEquals(Assert.java:1441)
+at tests.UserTest.createUser_shouldReturnCreatedUser(UserTest.java:25)
 at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
@@ -71,10 +64,10 @@ at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
 at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.IllegalArgumentException -->
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getUser_shouldReturnSucess -->
+        </test-method> <!-- createUser_shouldReturnCreatedUser -->
       </class> <!-- tests.UserTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

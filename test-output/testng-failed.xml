@@ -6,7 +6,8 @@
       <class name="tests.UserTest">
         <methods>
           <include name="setup"/>
-          <include name="getUser_shouldReturnSucess"/>
+          <include name="createUser_shouldReturnCreatedUser"/>
+          <include name="setupUserService"/>
         </methods>
       </class> <!-- tests.UserTest -->
     </classes>

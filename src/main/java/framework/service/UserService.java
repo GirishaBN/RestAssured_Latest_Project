@@ -17,7 +17,7 @@ public class UserService {
 	}
 
 	public Response createUser(UserRequest request) {
-		return given().spec(requestSpec).body(request).when().post("/users").then().extract().response();
+		return given().spec(requestSpec).body(request).when().post("/users").then().spec(responseSpec).extract().response();
 
 	}
 
