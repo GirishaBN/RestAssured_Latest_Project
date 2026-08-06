@@ -11,9 +11,9 @@ import io.restassured.response.Response;
 public class UserTest extends BaseTest {
 	private UserService userservice;
 	@BeforeClass(alwaysRun = true,description = "Verify user can be retrieved by ID")
-	public void setup()
+	public void setupUserService()
 	{
-		userservice= new UserService(requestSpec, responseSpec);
+		this.userservice= new UserService(requestSpec, responseSpec);
 	}
 
 	@Test(groups="smoke")

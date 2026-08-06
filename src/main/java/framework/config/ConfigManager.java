@@ -17,6 +17,7 @@ public final class ConfigManager {
 			env="qa";
 		}
 		String file="config/"+env+".properties";
+		System.out.println("fileName"+file);
 		try (InputStream input = ConfigManager.class.getClassLoader().getResourceAsStream(file)) {
 			if(input==null)
 			{
