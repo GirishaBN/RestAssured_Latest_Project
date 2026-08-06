@@ -15,7 +15,7 @@ public class UserTest extends BaseTest {
 	@BeforeClass(alwaysRun = true,description = "Verify user can be retrieved by ID")
 	public void setupUserService()
 	{
-		userservice= new UserService(requestSpec, responseSpec);
+		userservice= new UserService(requestSpec);
 	}
 	int userId;
 	@Test(groups= {"smoke","regression"},priority=1)
