@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
+import framework.model.request.UserRequest;
 import framework.service.UserService;
 import io.restassured.response.Response;
 
@@ -13,9 +14,17 @@ public class UserTest extends BaseTest {
 	@BeforeClass(alwaysRun = true,description = "Verify user can be retrieved by ID")
 	public void setupUserService()
 	{
-		this.userservice= new UserService(requestSpec, responseSpec);
+		userservice= new UserService(requestSpec, responseSpec);
 	}
 
+	@Test(groups= {"smoke","regression"})
+	public void createUser_shouldReturnCreatedUser()
+	{
+		UserRequest request=new UserRequest("ram","ram@gmail.com","male","active");
+		Response response=userservice.createUser(request);
+		Assert.assertEquals(response.statusCode(), 201);
+		
+	}
 	@Test(groups="smoke")
 	public void getUser_shouldReturnSucess() {
 		Response response = userservice.getUsers();

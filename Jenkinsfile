@@ -19,9 +19,7 @@ pipeline {
     stages {
 
         stage('Checkout') {
-            steps {
-                git 'https://github.com/GirishaBN/RestAssured_Latest_Project.git'
-            }
+            checkout scm;
         }
 
         stage('Run API Tests') {
