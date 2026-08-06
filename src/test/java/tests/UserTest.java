@@ -21,7 +21,7 @@ public class UserTest extends BaseTest {
 	@Test(groups= {"smoke","regression"})
 	public void createUser_shouldReturnCreatedUser()
 	{
-		UserRequest request=new UserRequest("ram","ram@gmail.com","male","active");
+		UserRequest request=new UserRequest("ram","ram@gmail1.com","male","active");
 		Response response=userservice.createUser(request);
 		Assert.assertEquals(response.statusCode(), 201);
 		
