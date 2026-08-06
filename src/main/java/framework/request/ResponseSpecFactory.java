@@ -11,8 +11,24 @@ public final class ResponseSpecFactory {
 	private ResponseSpecFactory() {
 	}
 
-	public static ResponseSpecification defaultSpec() {
-		return new ResponseSpecBuilder().expectContentType(ContentType.JSON)
-				.expectResponseTime(lessThan(ConfigManager.getLong("api.response.timeout.ms"))).build();
+	private static final long RESPONSE_TIMEOUT = ConfigManager.getLong("api.response.timeout.ms");
+
+	public static ResponseSpecification getResponseSpec() {
+		return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON)
+				.expectResponseTime(lessThan(RESPONSE_TIMEOUT)).build();
+	}
+
+	public static ResponseSpecification createResponseSpec() {
+		return new ResponseSpecBuilder().expectStatusCode(201).expectContentType(ContentType.JSON)
+				.expectResponseTime(lessThan(RESPONSE_TIMEOUT)).build();
+	}
+
+	public static ResponseSpecification updateResponseSpec() {
+		return new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON)
+				.expectResponseTime(lessThan(RESPONSE_TIMEOUT)).build();
+	}
+
+	public static ResponseSpecification deleteResponseSpec() {
+		return new ResponseSpecBuilder().expectStatusCode(204).expectResponseTime(lessThan(RESPONSE_TIMEOUT)).build();
 	}
 }

@@ -34,7 +34,7 @@ public class UserTest extends BaseTest {
 	}
 	
 	@Test(groups= {"smoke","regression"},priority=3)
-	public void deleteUser_shouldReturnCreatedUser()
+	public void deleteUser_shouldReturnNoContentType()
 	{
 		
 		Response response=userservice.deleteUser(userId);

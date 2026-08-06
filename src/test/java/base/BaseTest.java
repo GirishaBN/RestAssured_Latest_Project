@@ -14,8 +14,6 @@ protected ResponseSpecification responseSpec;
 public void setup()
 {
 	requestSpec=RequestSpecFactory.defaultSpec();
-	responseSpec=ResponseSpecFactory.defaultSpec();
 	System.out.println("requestSpec = " + requestSpec);
-    System.out.println("responseSpec = " + responseSpec);
 }
 }
