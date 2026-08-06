@@ -1,5 +1,8 @@
 package framework.request;
 
+import framework.auth.EnvironmentSecretProvider;
+import framework.auth.SecretProvider;
+import framework.auth.TokenManager;
 import framework.config.ConfigManager;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -8,9 +11,11 @@ import io.restassured.specification.RequestSpecification;
 public final class RequestSpecFactory {
 	private RequestSpecFactory() {
 	}
-
-	public static RequestSpecification defaultSpec() {
+	private final static SecretProvider SECRET_PROVIDER = new EnvironmentSecretProvider();
+   //private final static TokenManager TOKENMANAGER=new TokenManager(SECRET_PROVIDER );
+    public static RequestSpecification defaultSpec() {
 		return new RequestSpecBuilder().setBaseUri(ConfigManager.get("api.base.url"))
-				.setBasePath(ConfigManager.get("api.base.path")).setContentType(ContentType.JSON).build();
+				.setBasePath(ConfigManager.get("api.base.path")).setContentType(ContentType.JSON)
+				.addHeader("Authorization", "Bearer"+SECRET_PROVIDER.getSecret("api-token")).build();
 	}
 }
