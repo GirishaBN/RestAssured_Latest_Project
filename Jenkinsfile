@@ -20,7 +20,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git ''
+                git 'https://github.com/GirishaBN/RestAssured_Latest_Project.git'
             }
         }
 
