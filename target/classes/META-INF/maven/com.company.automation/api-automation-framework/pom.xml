@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.company.automation</groupId>
+	<artifactId>api-automation-framework</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<properties>
+
+		<maven.compiler.release>21</maven.compiler.release>
+
+		<rest-assured.version>5.5.6</rest-assured.version>
+		<testng.version>7.11.0</testng.version>
+
+		<jackson.version>2.20.0</jackson.version>
+
+		<slf4j.version>2.0.17</slf4j.version>
+		<log4j.version>2.25.1</log4j.version>
+
+		<extent.version>5.1.2</extent.version>
+
+		<maven-surefire.version>3.5.3</maven-surefire.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+	</properties>
+
+	<dependencies>
+
+		<!-- REST Assured -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>
+		</dependency>
+
+		<!-- JSON Path -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>${rest-assured.version}</version>
+		</dependency>
+
+		<!-- JSON Schema Validation -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>${rest-assured.version}</version>
+		</dependency>
+
+		<!-- TestNG -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Jackson / POJO Mapping -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- SLF4J API -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- Log4j2 Implementation -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- Extent Reports -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>${extent.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<plugins>
+
+			<!-- Maven Surefire + TestNG -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire.version}</version>
+
+				<configuration>
+
+					<suiteXmlFiles>
+						<suiteXmlFile>
+							testng.xml
+						</suiteXmlFile>
+					</suiteXmlFiles>
+					<groups>${groups}</groups>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>
