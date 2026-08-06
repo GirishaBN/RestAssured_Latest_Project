@@ -16,6 +16,6 @@ public final class RequestSpecFactory {
     public static RequestSpecification defaultSpec() {
 		return new RequestSpecBuilder().setBaseUri(ConfigManager.get("api.base.url"))
 				.setBasePath(ConfigManager.get("api.base.path")).setContentType(ContentType.JSON)
-				.addHeader("Authorization", "Bearer"+SECRET_PROVIDER.getSecret("api-token")).build();
+				.addHeader("Authorization", "Bearer"+SECRET_PROVIDER.getSecret("bearer-token")).build();
 	}
 }
