@@ -17,18 +17,28 @@ public class UserTest extends BaseTest {
 	{
 		userservice= new UserService(requestSpec, responseSpec);
 	}
-
-	@Test(groups= {"smoke","regression"})
+	int userId;
+	@Test(groups= {"smoke","regression"},priority=1)
 	public void createUser_shouldReturnCreatedUser()
 	{
 		UserRequest request=new UserRequest("ram2","ram@gmail2.com","male","active");
 		Response response=userservice.createUser(request);
 		Assert.assertEquals(response.statusCode(), 201);
+		userId=response.jsonPath().getInt("id");
 		
 	}
-	@Test(groups="smoke")
+	@Test(groups="smoke",priority=2)
 	public void getUser_shouldReturnSucess() {
 		Response response = userservice.getUsers();
 		Assert.assertEquals(response.statusCode(), 200);
+	}
+	
+	@Test(groups= {"smoke","regression"},priority=3)
+	public void deleteUser_shouldReturnCreatedUser()
+	{
+		
+		Response response=userservice.deleteUser(userId);
+		Assert.assertEquals(response.statusCode(), 204);
+		
 	}
 }

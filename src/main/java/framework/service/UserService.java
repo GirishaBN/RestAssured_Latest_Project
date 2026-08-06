@@ -29,5 +29,10 @@ public class UserService {
 		return given().spec(requestSpec).when().get("/users/{id}", userID).then().spec(responseSpec).extract()
 				.response();
 	}
+	
+	public Response deleteUser(int userID) {
+		return given().spec(requestSpec).when().delete("/users/{id}",userID).then().spec(responseSpec).extract().response();
+
+	}
 
 }
