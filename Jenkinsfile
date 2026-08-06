@@ -26,7 +26,15 @@ pipeline {
 
         stage('Run API Tests') {
             steps {
+				withCredentials([
+                    string(
+                        credentialsId: 'bearer-token',
+                        variable: 'BEARER_TOKEN'
+                    )
+                ])
+				{
                 bat "mvn clean test -Denv=${ENV} -Dgroups=${GROUPS}"
+                }
             }
         }
     }

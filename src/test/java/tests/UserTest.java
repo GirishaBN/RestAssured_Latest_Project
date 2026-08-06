@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
+import framework.auth.TokenManager;
 import framework.model.request.UserRequest;
 import framework.service.UserService;
 import io.restassured.response.Response;

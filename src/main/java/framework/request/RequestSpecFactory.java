@@ -13,9 +13,11 @@ public final class RequestSpecFactory {
 	}
 	private final static SecretProvider SECRET_PROVIDER = new EnvironmentSecretProvider();
    //private final static TokenManager TOKENMANAGER=new TokenManager(SECRET_PROVIDER );
+	static String token=SECRET_PROVIDER.getSecret("BEARER_TOKEN");
     public static RequestSpecification defaultSpec() {
-		return new RequestSpecBuilder().setBaseUri(ConfigManager.get("api.base.url"))
+    	System.out.println("Bearer token loaded: " + (token != null && !token.isBlank()));
+    	return new RequestSpecBuilder().setBaseUri(ConfigManager.get("api.base.url"))
 				.setBasePath(ConfigManager.get("api.base.path")).setContentType(ContentType.JSON)
-				.addHeader("Authorization", "Bearer"+SECRET_PROVIDER.getSecret("bearer-token")).build();
+				.addHeader("Authorization", "Bearer "+token).build();
 	}
 }
