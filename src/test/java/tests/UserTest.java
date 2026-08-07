@@ -36,7 +36,7 @@ public class UserTest extends BaseTest {
 	public void createUser_without_value_shouldReturnBadRequest()
 	{
 		UserRequest request=new UserRequest(" ","ram@gmail6.com","male","active");
-		Response response=userservice.createUser(request);
+		Response response=userservice.createNegativeUser(request);
 		Assert.assertEquals(response.statusCode(), 422);
 		JsonSchemaValidator.validate(response,"error-response.json");
 		message=response.jsonPath().getString("message");
