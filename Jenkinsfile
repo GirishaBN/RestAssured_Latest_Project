@@ -38,4 +38,17 @@ pipeline {
             }
         }
     }
+    post {
+
+    always {
+
+        archiveArtifacts artifacts:
+            'target/extent-report.html',
+            allowEmptyArchive: true
+
+        archiveArtifacts artifacts:
+            'target/logs/**/*.log',
+            allowEmptyArchive: true
+    }
+}
 }
