@@ -37,12 +37,8 @@ public class UserTest extends BaseTest {
 		UserRequest request=new UserRequest(" ","ram@gmail5.com","male","active");
 		Response response=userservice.createNegativeUser(request);
 		JsonSchemaValidator.validate(response,"error-response.json");
-		String nameMessage = response.jsonPath()
-		        .getString("find { it.field == 'name' }.message");
-
-		String emailMessage = response.jsonPath()
-		        .getString("find { it.field == 'email' }.message");
-
+		String nameMessage = response.jsonPath().getString("find { it.field == 'name' }.message");
+		String emailMessage = response.jsonPath().getString("find { it.field == 'email' }.message");
 		Assert.assertEquals(nameMessage, "can't be blank");
 		Assert.assertEquals(emailMessage, "has already been taken");
 	}
@@ -56,9 +52,7 @@ public class UserTest extends BaseTest {
 	@Test(groups= {"smoke","regression"},priority=4)
 	public void deleteUser_shouldReturnNoContentType()
 	{
-		
 		Response response=userservice.deleteUser(userId);
 		Assert.assertEquals(response.statusCode(), 204);
-		
 	}
 }
