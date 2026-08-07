@@ -1,4 +1,4 @@
-package framework.listner;
+package framework.listeners;
 
 import org.testng.ITestContext;
 import org.testng.ITestListener;
