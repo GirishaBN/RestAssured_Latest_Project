@@ -31,10 +31,10 @@ public class UserTest extends BaseTest {
 		System.out.println("Created User ID: " + userId);
 	}
 	
-	@Test(groups= {"smoke","regression"},priority=1)
+	@Test(groups= {"smoke","regression"},priority=2)
 	public void createUser_without_value_shouldReturnBadRequest()
 	{
-		UserRequest request=new UserRequest(" ","ram@gmail6.com","male","active");
+		UserRequest request=new UserRequest(" ","ram@gmail5.com","male","active");
 		Response response=userservice.createNegativeUser(request);
 		JsonSchemaValidator.validate(response,"error-response.json");
 		String nameMessage = response.jsonPath()
@@ -47,13 +47,13 @@ public class UserTest extends BaseTest {
 		Assert.assertEquals(emailMessage, "has already been taken");
 	}
 	
-	@Test(groups="smoke",priority=2)
+	@Test(groups="smoke",priority=3)
 	public void getUser_shouldReturnSucess() {
 		Response response = userservice.getUser(userId);
 		Assert.assertEquals(response.statusCode(), 200);
 	}
 	
-	@Test(groups= {"smoke","regression"},priority=3)
+	@Test(groups= {"smoke","regression"},priority=4)
 	public void deleteUser_shouldReturnNoContentType()
 	{
 		
