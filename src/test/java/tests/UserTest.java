@@ -23,7 +23,7 @@ public class UserTest extends BaseTest {
 	@Test(groups= {"smoke","regression"},priority=1)
 	public void createUser_shouldReturnCreatedUser()
 	{
-		UserRequest request=new UserRequest("ram4","ram@gmail4.com","male","active");
+		UserRequest request=new UserRequest("ram5","ram@gmail5.com","male","active");
 		Response response=userservice.createUser(request);
 		Assert.assertEquals(response.statusCode(), 201);
 		JsonSchemaValidator.validate(response,"user-response.json");
