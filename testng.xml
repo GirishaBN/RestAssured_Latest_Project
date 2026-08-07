@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE suite SYSTEM
-        "https://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="API Automation Suite" verbose="1">
+	<listeners>
+		<listener class-name="listeners.ExtentTestListener" />
+	</listeners>
+	<test name="API Regression Tests">
 
-    <test name="API Regression Tests">
-
-        <!--<groups>
+		<!--<groups>
             <run>
                 <include name="smoke"/>
             </run>
         </groups>-->
 
-        <packages>
-            <package name="tests"/>
-        </packages>
+		<packages>
+			<package name="tests" />
+		</packages>
 
-    </test>
+	</test>
 
 </suite>
