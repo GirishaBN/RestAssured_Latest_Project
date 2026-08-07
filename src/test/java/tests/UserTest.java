@@ -24,7 +24,7 @@ public class UserTest extends BaseTest {
 	{
 		UserRequest request=new UserRequest("ram5","ram@gmail5.com","male","active");
 		Response response=userservice.createUser(request);
-		Assert.assertEquals(response.statusCode(), 201);
+		Assert.assertEquals(response.statusCode(), 400,"Intentional failure to verify Extent Report");
 		JsonSchemaValidator.validate(response,"user-response.json");
 		userId=response.jsonPath().getInt("id");
 		Assert.assertNotNull(userId, "User ID should be generated");
