@@ -33,5 +33,12 @@ public class UserService {
 		return given().spec(requestSpec).when().delete("/users/{id}",userID).then().spec(ResponseSpecFactory.deleteResponseSpec()).extract().response();
 
 	}
+	
+	public Response createNegativeUser(UserRequest request)
+	{
+		return given().spec(requestSpec).body(request).when().post("/users").then().spec(ResponseSpecFactory.validateErrorResponseSpec()).extract().response();
+		
+		
+	}
 
 }
