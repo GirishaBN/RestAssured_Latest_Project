@@ -19,7 +19,6 @@ public class UserTest extends BaseTest {
 		userservice= new UserService(requestSpec);
 	}
 	private static int userId;
-	private static String message;
 	@Test(groups= {"smoke","regression"},priority=1)
 	public void createUser_shouldReturnCreatedUser()
 	{
@@ -37,11 +36,15 @@ public class UserTest extends BaseTest {
 	{
 		UserRequest request=new UserRequest(" ","ram@gmail6.com","male","active");
 		Response response=userservice.createNegativeUser(request);
-		Assert.assertEquals(response.statusCode(), 422);
 		JsonSchemaValidator.validate(response,"error-response.json");
-		message=response.jsonPath().getString("message");
-		Assert.assertNotNull(message, "can't be blank");
-		System.out.println("error message is : " + message);
+		String nameMessage = response.jsonPath()
+		        .getString("find { it.field == 'name' }.message");
+
+		String emailMessage = response.jsonPath()
+		        .getString("find { it.field == 'email' }.message");
+
+		Assert.assertEquals(nameMessage, "can't be blank");
+		Assert.assertEquals(emailMessage, "has already been taken");
 	}
 	
 	@Test(groups="smoke",priority=2)
