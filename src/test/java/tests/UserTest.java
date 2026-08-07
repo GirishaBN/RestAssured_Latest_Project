@@ -43,13 +43,13 @@ public class UserTest extends BaseTest {
 		Assert.assertEquals(emailMessage, "has already been taken");
 	}
 	
-	@Test(groups="smoke",priority=3)
+	@Test(groups="smoke",priority=3,dependsOnMethods = "createUser_shouldReturnCreatedUser")
 	public void getUser_shouldReturnSucess() {
 		Response response = userservice.getUser(userId);
 		Assert.assertEquals(response.statusCode(), 200);
 	}
 	
-	@Test(groups= {"smoke","regression"},priority=4)
+	@Test(groups= {"smoke","regression"},priority=4,dependsOnMethods = "createUser_shouldReturnCreatedUser")
 	public void deleteUser_shouldReturnNoContentType()
 	{
 		Response response=userservice.deleteUser(userId);
