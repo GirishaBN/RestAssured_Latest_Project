@@ -11,7 +11,7 @@ pipeline {
 
         choice(
             name: 'GROUPS',
-            choices: ['smoke', 'regression'],
+            choices: ['smoke', 'regression','sanity'],
             description: 'TestNG group to execute'
         )
     }
