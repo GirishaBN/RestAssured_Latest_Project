@@ -3,6 +3,7 @@ package framework.reporting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import framework.retry.RetryContext;
 import io.restassured.filter.Filter;
 import io.restassured.filter.FilterContext;
 import io.restassured.response.Response;
@@ -11,86 +12,65 @@ import io.restassured.specification.FilterableResponseSpecification;
 
 public final class ApiLoggingFilter implements Filter {
 
-    private static final Logger log =
-            LoggerFactory.getLogger(ApiLoggingFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(ApiLoggingFilter.class);
 
-    @Override
-    public Response filter(
-            FilterableRequestSpecification request,
-            FilterableResponseSpecification response,
-            FilterContext context) {
+	@Override
+	public Response filter(FilterableRequestSpecification request, FilterableResponseSpecification responseSpec,
+			FilterContext context) {
 
-        logRequest(request);
+		logRequest(request);
 
-        Response apiResponse = context.next(request, response);
+		Response response = context.next(request, responseSpec);
 
-        logResponse(apiResponse);
+		// Centralized status capture for retry
+		RetryContext.setStatusCode(response.statusCode());
 
-        return apiResponse;
-    }
+		logResponse(response);
 
-    private void logRequest(FilterableRequestSpecification request) {
+		return response;
+	}
 
-        StringBuilder output = new StringBuilder();
+	private void logRequest(FilterableRequestSpecification request) {
 
-        output.append("Method: ")
-              .append(request.getMethod())
-              .append("\n");
+		StringBuilder output = new StringBuilder();
 
-        output.append("URI: ")
-              .append(request.getURI())
-              .append("\n");
+		output.append("Method: ").append(request.getMethod()).append("\n");
 
-        output.append("Headers: ")
-              .append(maskHeaders(request))
-              .append("\n");
+		output.append("URI: ").append(request.getURI()).append("\n");
 
-        if (request.getBody() != null) {
-            output.append("Body: ")
-                  .append(maskBody(request.getBody().toString()))
-                  .append("\n");
-        }
+		output.append("Headers: ").append(maskHeaders(request)).append("\n");
 
-        String requestData = output.toString();
+		if (request.getBody() != null) {
+			output.append("Body: ").append(maskBody(request.getBody().toString())).append("\n");
+		}
 
-        ApiEvidence.setRequest(requestData);
+		String requestData = output.toString();
 
-        log.info("API REQUEST\n{}", requestData);
-    }
+		ApiEvidence.setRequest(requestData);
 
-    private void logResponse(Response response) {
+		log.info("API REQUEST\n{}", requestData);
+	}
 
-        String responseData =
-                "Status: " + response.statusCode() + "\n"
-                + "Time: " + response.getTime() + " ms\n"
-                + "Headers: " + response.getHeaders() + "\n"
-                + "Body: " + response.asString();
+	private void logResponse(Response response) {
 
-        ApiEvidence.setResponse(responseData);
+		String responseData = "Status: " + response.statusCode() + "\n" + "Time: " + response.getTime() + " ms\n"
+				+ "Headers: " + response.getHeaders() + "\n" + "Body: " + response.asString();
 
-        log.info("API RESPONSE\n{}", responseData);
-    }
+		ApiEvidence.setResponse(responseData);
 
-    private String maskHeaders(FilterableRequestSpecification request) {
+		log.info("API RESPONSE\n{}", responseData);
+	}
 
-        String headers = request.getHeaders().toString();
+	private String maskHeaders(FilterableRequestSpecification request) {
 
-        return headers.replaceAll(
-                "(?i)(Authorization\\s*:\\s*Bearer\\s+)[^,}\\]]+",
-                "$1******"
-        );
-    }
+		String headers = request.getHeaders().toString();
 
-    private String maskBody(String body) {
+		return headers.replaceAll("(?i)(Authorization\\s*:\\s*Bearer\\s+)[^,}\\]]+", "$1******");
+	}
 
-        return body
-                .replaceAll(
-                        "(?i)(\"password\"\\s*:\\s*\")[^\"]*",
-                        "$1******"
-                )
-                .replaceAll(
-                        "(?i)(\"token\"\\s*:\\s*\")[^\"]*",
-                        "$1******"
-                );
-    }
+	private String maskBody(String body) {
+
+		return body.replaceAll("(?i)(\"password\"\\s*:\\s*\")[^\"]*", "$1******")
+				.replaceAll("(?i)(\"token\"\\s*:\\s*\")[^\"]*", "$1******");
+	}
 }

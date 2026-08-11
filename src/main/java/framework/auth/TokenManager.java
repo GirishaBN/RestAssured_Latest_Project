@@ -104,11 +104,7 @@ public class TokenManager {
                     + ((expiresIn - safetyBufferSeconds)
                     * 1000);
 
-            cachedToken =
-                    new Token(
-                            accessToken,
-                            expiresAt
-                    );
+            cachedToken = new Token(accessToken,expiresAt);
 
             return accessToken;
 
