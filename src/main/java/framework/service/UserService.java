@@ -34,8 +34,12 @@ public class UserService {
 
 	public Response getUser(int userId) {
 		log.info("Executing GET user API. userId={}",userId);
-		return given().spec(requestSpec).when().get("/users/{id}", userId).then().spec(ResponseSpecFactory.getResponseSpec()).extract()
-				.response();
+		/*
+		 * return given().spec(requestSpec).when().get("/users/{id}",
+		 * userId).then().spec(ResponseSpecFactory.getResponseSpec()).extract()
+		 * .response();
+		 */
+		 return given().spec(requestSpec).get("https://httpbin.org/status/429");
 	}
 	
 	public Response deleteUser(int userID) {

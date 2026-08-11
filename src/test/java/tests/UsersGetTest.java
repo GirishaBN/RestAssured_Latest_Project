@@ -26,7 +26,7 @@ public class UsersGetTest extends BaseTest {
 		logger.info("Started getSingleUser| Thread="+Thread.currentThread().getName()+"| Time: "+System.currentTimeMillis());
 		int userID=8572725;
 		Response response = userservice.getUser(userID);
-		Assert.assertEquals(response.statusCode(), 429);
+		Assert.assertEquals(response.statusCode(), 200);
 		logger.info("Ended getSingleUser| Thread="+Thread.currentThread().getName()+"| Time: "+System.currentTimeMillis());
 		
 	}
