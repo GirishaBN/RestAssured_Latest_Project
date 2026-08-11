@@ -4,7 +4,7 @@
 <suite name="API Automation Suite" verbose="1" parallel="methods" thread-count="2">
 	<listeners>
 		<listener class-name="framework.listeners.ExtentTestListener" />
-		<listener class-name="framewoek.retry.RetryAnnotationTransformer" />
+		<listener class-name="framework.retry.RetryAnnotationTransformer" />
 	</listeners>
 	<test name="API Regression Tests">
 
