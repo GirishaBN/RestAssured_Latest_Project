@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.UUID;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -26,7 +28,7 @@ public class UserApiTest extends BaseTest {
 	@Test(groups = { "smoke", "regression" })
 	public void createUser_shouldReturnCreated() {
 
-		UserRequest request = new UserRequest("ram5", "ram5@gmail.com", "male", "active");
+		UserRequest request = new UserRequest("ram"+UUID.randomUUID(), "ram"+UUID.randomUUID()+"@gmail.com", "male", "active");
 
 		Response response = userService.createUser(request);
 		response.then().spec(ResponseSpecFactory.createResponseSpec());
