@@ -13,7 +13,7 @@ import io.restassured.response.Response;
 public class UserApiTest extends BaseTest {
 
 	private UserService userService;
-
+	int userId;
 	@BeforeClass(alwaysRun = true)
 	public void setupUserService() {
 		userService = new UserService();
@@ -30,7 +30,7 @@ public class UserApiTest extends BaseTest {
 
 		Response response = userService.createUser(request);
 		response.then().spec(ResponseSpecFactory.createResponseSpec());
-		int userId = response.jsonPath().getInt("id");
+		userId = response.jsonPath().getInt("id");
 
 		Assert.assertTrue(userId > 0, "User ID should be generated");
 	}
@@ -53,8 +53,6 @@ public class UserApiTest extends BaseTest {
 
 	@Test(groups = { "smoke", "regression" })
 	public void getSingleUser_shouldReturnSuccess() {
-
-		int userId = 8572725;
 
 		Response response = userService.getUser(userId);
 		response.then().spec(ResponseSpecFactory.getResponseSpec());
