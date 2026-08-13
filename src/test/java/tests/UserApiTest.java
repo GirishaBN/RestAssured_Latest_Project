@@ -11,101 +11,147 @@ import framework.model.request.UserRequest;
 import framework.request.ResponseSpecFactory;
 import framework.service.UserService;
 import io.restassured.response.Response;
-
 public class UserApiTest extends BaseTest {
 
-	private UserService userService;
-	int userId;
-	@BeforeClass(alwaysRun = true)
-	public void setupUserService() {
-		userService = new UserService();
-	}
+    private UserService userService;
 
-	// =========================
-	// CREATE
-	// =========================
+    @BeforeClass(alwaysRun = true)
+    public void setupUserService() {
+        userService = new UserService();
+    }
 
-	@Test(groups = { "smoke", "regression" })
-	public void createUser_shouldReturnCreated() {
+    @Test(groups = {"smoke", "regression"})
+    public void createUser_shouldReturnCreated() {
 
-		UserRequest request = new UserRequest("ram"+UUID.randomUUID(), "ram"+UUID.randomUUID()+"@gmail.com", "male", "active");
+        String uniqueId = UUID.randomUUID().toString();
 
-		Response response = userService.createUser(request);
-		response.then().spec(ResponseSpecFactory.createResponseSpec());
-		userId = response.jsonPath().getInt("id");
+        UserRequest request =
+                new UserRequest(
+                        "ram_" + uniqueId,
+                        "ram_" + uniqueId + "@gmail.com",
+                        "male",
+                        "active"
+                );
 
-		Assert.assertTrue(userId > 0, "User ID should be generated");
-	}
+        Response response =
+                userService.createUser(request);
 
-	// =========================
-	// GET ALL
-	// =========================
+        response.then()
+                .spec(ResponseSpecFactory.createResponseSpec());
 
-	@Test(groups = { "smoke", "regression" })
-	public void getAllUsers_shouldReturnSuccess() {
+        int userId =
+                response.jsonPath().getInt("id");
 
-		Response response = userService.getUsers();
-		response.then().spec(ResponseSpecFactory.getResponseSpec());
-		Assert.assertEquals(response.statusCode(), 200);
-	}
+        Assert.assertTrue(
+                userId > 0,
+                "User ID should be generated"
+        );
+    }
 
-	// =========================
-	// GET SINGLE
-	// =========================
+    @Test(groups = {"smoke", "regression"})
+    public void getAllUsers_shouldReturnSuccess() {
 
-	@Test(groups = { "smoke", "regression" })
-	public void getSingleUser_shouldReturnSuccess() {
+        Response response =
+                userService.getUsers();
 
-		Response response = userService.getUser(userId);
-		response.then().spec(ResponseSpecFactory.getResponseSpec());
-		Assert.assertEquals(response.statusCode(), 200);
-	}
+        response.then()
+                .spec(ResponseSpecFactory.getResponseSpec());
+    }
 
-	// =========================
-	// UNKNOWN USER
-	// =========================
+    @Test(groups = {"smoke", "regression"})
+    public void getSingleUser_shouldReturnSuccess() {
 
-	@Test(groups = { "negative", "regression" })
-	public void getUnknownUser_shouldReturnNotFound() {
+        String uniqueId = UUID.randomUUID().toString();
 
-		int userId = 999999999;
+        UserRequest request =
+                new UserRequest(
+                        "user_" + uniqueId,
+                        "user_" + uniqueId + "@gmail.com",
+                        "male",
+                        "active"
+                );
 
-		Response response = userService.getUser(userId);
-		response.then().spec(ResponseSpecFactory.validateErrorResponseSpec());
+        Response createResponse =
+                userService.createUser(request);
 
-		Assert.assertEquals(response.statusCode(), 404);
+        createResponse.then()
+                .spec(ResponseSpecFactory.createResponseSpec());
 
-		String message = response.jsonPath().getString("message");
+        int userId =
+                createResponse.jsonPath().getInt("id");
 
-		Assert.assertEquals(message, "Resource not found");
-	}
+        Assert.assertTrue(
+                userId > 0,
+                "User ID should be generated"
+        );
 
-	// =========================
-	// CRUD WORKFLOW
-	// =========================
+        Response getResponse =
+                userService.getUser(userId);
 
-	@Test(groups = { "regression" })
-	public void createGetDeleteUser_shouldCompleteSuccessfully() {
+        getResponse.then()
+                .spec(ResponseSpecFactory.getResponseSpec());
+    }
 
-		UserRequest request = new UserRequest("parallelUser", "parallelUser@gmail.com", "male", "active");
+    @Test(groups = {"negative", "regression"})
+    public void getUnknownUser_shouldReturnNotFound() {
 
-		// CREATE
-		Response createResponse = userService.createUser(request);
+        int userId = 999999999;
 
-		Assert.assertEquals(createResponse.statusCode(), 201);
+        Response response =
+                userService.getUser(userId);
 
-		int userId = createResponse.jsonPath().getInt("id");
+        response.then()
+                .spec(ResponseSpecFactory.validateErrorResponseSpec());
 
-		Assert.assertTrue(userId > 0, "Created user ID should be greater than zero");
+        String message =
+                response.jsonPath().getString("message");
 
-		// GET
-		Response getResponse = userService.getUser(userId);
+        Assert.assertEquals(
+                message,
+                "Resource not found"
+        );
+    }
 
-		Assert.assertEquals(getResponse.statusCode(), 200);
+    @Test(groups = {"regression"})
+    public void createGetDeleteUser_shouldCompleteSuccessfully() {
 
-		// DELETE
-		Response deleteResponse = userService.deleteUser(userId);
+        String uniqueId = UUID.randomUUID().toString();
 
-		Assert.assertEquals(deleteResponse.statusCode(), 204);
-	}
+        UserRequest request =
+                new UserRequest(
+                        "parallelUser_" + uniqueId,
+                        "parallelUser_" + uniqueId + "@gmail.com",
+                        "male",
+                        "active"
+                );
+
+        // CREATE
+        Response createResponse =
+                userService.createUser(request);
+
+        createResponse.then()
+                .spec(ResponseSpecFactory.createResponseSpec());
+
+        int userId =
+                createResponse.jsonPath().getInt("id");
+
+        Assert.assertTrue(
+                userId > 0,
+                "Created user ID should be greater than zero"
+        );
+
+        // GET
+        Response getResponse =
+                userService.getUser(userId);
+
+        getResponse.then()
+                .spec(ResponseSpecFactory.getResponseSpec());
+
+        // DELETE
+        Response deleteResponse =
+                userService.deleteUser(userId);
+
+        deleteResponse.then()
+                .spec(ResponseSpecFactory.deleteResponseSpec());
+    }
 }
