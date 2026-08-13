@@ -61,7 +61,7 @@ public class TokenManager {
             Response response =
                     given()
                         .baseUri(
-                            ConfigManager.get("base.url")
+                            ConfigManager.getString("base.url")
                         )
                         .contentType(
                             "application/x-www-form-urlencoded"

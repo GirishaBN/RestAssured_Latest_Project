@@ -30,7 +30,7 @@ public final class ConfigManager {
 		}
 	}
 	
-	public static String get(String key)
+	public static String getString(String key)
 	{
 		String value= PROPERTIES.getProperty(key);
 		if(value==null||value.isBlank())
@@ -38,6 +38,22 @@ public final class ConfigManager {
 			throw new IllegalArgumentException("Missing Configuration: "+key);
 		}
 		return value;
+	}
+	public static int getInt(String key)
+	{
+		String value= PROPERTIES.getProperty(key);
+		if(value==null||value.isBlank())
+		{
+			throw new IllegalArgumentException("Missing Configuration: "+key);
+		}
+		
+		try {
+		return Integer.parseInt(value);
+		}
+		catch(NumberFormatException e)
+		{
+			throw new IllegalArgumentException("Invalid int value for configuration: " + key +" = " + value,e);
+		}
 	}
 	public static long getLong(String key)
 	{
@@ -52,6 +68,22 @@ public final class ConfigManager {
 		catch(NumberFormatException e)
 		{
 			throw new IllegalArgumentException("Invalid long value for configuration: " + key +" = " + value,e);
+		}
+	}
+	
+	public static boolean getBoolean(String key)
+	{
+		String value= PROPERTIES.getProperty(key);
+		if(value==null||value.isBlank())
+		{
+			throw new IllegalArgumentException("Missing Configuration: "+key);
+		}
+		try {
+		return Boolean.parseBoolean(value.trim());
+		}
+		catch(NumberFormatException e)
+		{
+			throw new IllegalArgumentException("Invalid boolean value for configuration: " + key +" = " + value,e);
 		}
 	}
 

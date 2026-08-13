@@ -1,8 +1,9 @@
-package framework.reporting;
+package framework.logging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import framework.reporting.ApiEvidence;
 import framework.retry.RetryContext;
 import io.restassured.filter.Filter;
 import io.restassured.filter.FilterContext;

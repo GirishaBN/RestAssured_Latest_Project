@@ -33,6 +33,6 @@ public final class ResponseSpecFactory {
 	}
 	public static ResponseSpecification validateErrorResponseSpec()
 	{
-		return new ResponseSpecBuilder().expectStatusCode(422).expectContentType(ContentType.JSON).build();
+		return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
 	}
 }

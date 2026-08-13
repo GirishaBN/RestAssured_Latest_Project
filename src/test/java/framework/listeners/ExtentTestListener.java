@@ -49,7 +49,6 @@ public class ExtentTestListener implements ITestListener {
 		}
 
 		ExtentTestManager.removeTest();
-
 		ApiEvidence.clear();
 	}
 

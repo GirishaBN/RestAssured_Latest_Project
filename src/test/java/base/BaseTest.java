@@ -1,18 +1,18 @@
 package base;
 
-import org.testng.annotations.BeforeClass;
-
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import framework.request.RequestSpecFactory;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
+import framework.request.RequestSpecManager;
 
 public class BaseTest {
-protected RequestSpecification requestSpec;
-protected ResponseSpecification responseSpec;
-@BeforeClass(alwaysRun = true)
-public void setup()
-{
-	requestSpec=RequestSpecFactory.defaultSpec();
-	System.out.println("requestSpec = " + requestSpec);
-}
+	@BeforeMethod(alwaysRun = true)
+	public void setup() {
+		RequestSpecManager.set(RequestSpecFactory.defaultSpec());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void tearDown() {
+		RequestSpecManager.clear();
+	}
 }

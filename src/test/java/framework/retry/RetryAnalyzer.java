@@ -6,18 +6,24 @@ import org.slf4j.LoggerFactory;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
+import framework.config.ConfigManager;
+
 public class RetryAnalyzer implements IRetryAnalyzer {
 
 	private static final Logger log = LoggerFactory.getLogger(RetryAnalyzer.class);
 
-	private static final int MAX_RETRY = 2;
+	private static final int MAX_RETRY = ConfigManager.getInt("retry.count");
 
 	private int retryCount = 0;
 
 	@Override
 	public boolean retry(ITestResult result) {
 		String methodName = result.getMethod().getMethodName();
-
+		
+		if (!ConfigManager.getBoolean("retry.enabled")) {
+	        return false;
+	    }
+		
 		if (retryCount >= MAX_RETRY) {
 
 			log.warn("Maximum retry attempts reached. Test={}", methodName);
