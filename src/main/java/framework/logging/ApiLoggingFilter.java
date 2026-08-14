@@ -129,22 +129,22 @@ public final class ApiLoggingFilter implements Filter {
 		/*
 		 * Authorization
 		 */
-		headers = headers.replaceAll("(?i)(Authorization\\s*:\\s*Bearer\\s+)[^,}\\]]+", "$1******");
+		headers = headers.replaceAll("(?i)(Authorization\\s*[:=]\\s*Bearer\\s+)[^,}\\]]+", "$1******");
 
 		/*
 		 * API keys
 		 */
-		headers = headers.replaceAll("(?i)(X-API-Key\\s*:\\s*)[^,}\\]]+", "$1******");
+		headers = headers.replaceAll("(?i)(X-API-Key\\s*[:=]\\s*)[^,}\\]]+", "$1******");
 
 		/*
 		 * Cookies
 		 */
-		headers = headers.replaceAll("(?i)(Cookie\\s*:\\s*)[^,}\\]]+", "$1******");
+		headers = headers.replaceAll("(?i)(Cookie\\s*[:=]\\s*)[^,}\\]]+", "$1******");
 
 		/*
 		 * Set-Cookie
 		 */
-		headers = headers.replaceAll("(?i)(Set-Cookie\\s*:\\s*)[^,}\\]]+", "$1******");
+		headers = headers.replaceAll("(?i)(Set-Cookie\\s*[:=]\\s*)[^,}\\]]+", "$1******");
 
 		return headers;
 	}
@@ -173,32 +173,32 @@ public final class ApiLoggingFilter implements Filter {
 		/*
 		 * Password
 		 */
-		body = body.replaceAll("(?i)(\"password\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"password\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		/*
 		 * Access token
 		 */
-		body = body.replaceAll("(?i)(\"access_token\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"access_token\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		/*
 		 * Refresh token
 		 */
-		body = body.replaceAll("(?i)(\"refresh_token\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"refresh_token\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		/*
 		 * Generic token
 		 */
-		body = body.replaceAll("(?i)(\"token\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"token\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		/*
 		 * Client secret
 		 */
-		body = body.replaceAll("(?i)(\"client_secret\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"client_secret\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		/*
 		 * Secret
 		 */
-		body = body.replaceAll("(?i)(\"secret\"\\s*:\\s*\")[^\"]*", "$1******");
+		body = body.replaceAll("(?i)(\"secret\"\\s*[:=]\\s*\")[^\"]*", "$1******");
 
 		return body;
 	}
