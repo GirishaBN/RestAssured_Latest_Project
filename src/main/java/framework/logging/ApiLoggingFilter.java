@@ -17,7 +17,7 @@ public final class ApiLoggingFilter implements Filter {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiLoggingFilter.class);
 
-	private static final int MAX_BODY_LENGTH = 10_000;
+	private static final int MAX_BODY_LENGTH = 10_0;
 
 	@Override
 	public Response filter(FilterableRequestSpecification request, FilterableResponseSpecification responseSpec,
