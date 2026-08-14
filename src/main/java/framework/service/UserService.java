@@ -17,27 +17,40 @@ public class UserService {
 
 		log.info("Executing CREATE user API");
 
-		return given().spec(RequestSpecManager.get()).body(request).when().post("/users").then().extract().response();
+		Response response = given().spec(RequestSpecManager.get()).body(request).when().post("/users").then().extract()
+				.response();
+		log.info("CREATE user API completed. status={}", response.statusCode());
+		return response;
+
 	}
 
 	public Response getUsers() {
 
 		log.info("Executing GET all users API");
 
-		return given().spec(RequestSpecManager.get()).when().get("/users").then().extract().response();
+		Response response = given().spec(RequestSpecManager.get()).when().get("/users").then().extract().response();
+		log.info("GET all users API completed. status={}", response.statusCode());
+		return response;
 	}
 
 	public Response getUser(int userId) {
 
 		log.info("Executing GET user API. userId={}", userId);
 
-		return given().spec(RequestSpecManager.get()).when().get("/users/{id}", userId).then().extract().response();
+		Response response = given().spec(RequestSpecManager.get()).when().get("/users/{id}", userId).then().extract()
+				.response();
+		log.info("GET user API completed. userId={}, status={}", userId, response.statusCode());
+
+		return response;
 	}
 
 	public Response deleteUser(int userId) {
 
 		log.info("Executing DELETE user API. userId={}", userId);
 
-		return given().spec(RequestSpecManager.get()).when().delete("/users/{id}", userId).then().extract().response();
+		Response response = given().spec(RequestSpecManager.get()).when().delete("/users/{id}", userId).then().extract()
+				.response();
+		log.info("DELETE user API completed. userId={}, status={}", userId, response.statusCode());
+		return response;
 	}
 }

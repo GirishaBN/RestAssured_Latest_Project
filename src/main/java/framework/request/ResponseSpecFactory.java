@@ -31,8 +31,8 @@ public final class ResponseSpecFactory {
 	public static ResponseSpecification deleteResponseSpec() {
 		return new ResponseSpecBuilder().expectStatusCode(204).expectResponseTime(lessThan(RESPONSE_TIMEOUT)).build();
 	}
-	public static ResponseSpecification validateErrorResponseSpec()
-	{
+
+	public static ResponseSpecification notFoundResponseSpec() {
 		return new ResponseSpecBuilder().expectStatusCode(404).expectContentType(ContentType.JSON).build();
 	}
 }
