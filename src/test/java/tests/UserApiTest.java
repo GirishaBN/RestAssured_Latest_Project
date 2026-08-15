@@ -10,6 +10,7 @@ import base.BaseTest;
 import framework.model.request.UserRequest;
 import framework.request.ResponseSpecFactory;
 import framework.service.UserService;
+import framework.testdata.UserDataProvider;
 import io.restassured.response.Response;
 
 public class UserApiTest extends BaseTest {
@@ -21,12 +22,8 @@ public class UserApiTest extends BaseTest {
 		userService = new UserService();
 	}
 
-	@Test(groups = { "smoke", "regression" })
-	public void createUser_shouldReturnCreated() {
-
-		String uniqueId = UUID.randomUUID().toString();
-
-		UserRequest request = new UserRequest("ram_" + uniqueId, "ram_" + uniqueId + "@gmail.com", "male", "active");
+	@Test(groups = { "smoke", "regression" },dataProvider = "userData",dataProviderClass = UserDataProvider.class)
+	public void createUser_shouldReturnCreated(UserRequest request) {
 
 		Response response = userService.createUser(request);
 
@@ -68,9 +65,7 @@ public class UserApiTest extends BaseTest {
 	@Test(groups = { "negative", "regression" })
 	public void getUnknownUser_shouldReturnNotFound() {
 
-		int userId = 999999999;
-
-		Response response = userService.getUser(userId);
+		Response response = userService.getUser(UserDataProvider.UNKNOWN_USER_ID);
 
 		response.then().spec(ResponseSpecFactory.notFoundResponseSpec());
 

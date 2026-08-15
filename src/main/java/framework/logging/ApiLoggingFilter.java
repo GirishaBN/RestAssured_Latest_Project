@@ -17,7 +17,7 @@ public final class ApiLoggingFilter implements Filter {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiLoggingFilter.class);
 
-	private static final int MAX_BODY_LENGTH = 10_0;
+	private static final int MAX_BODY_LENGTH = 10000;
 
 	@Override
 	public Response filter(FilterableRequestSpecification request, FilterableResponseSpecification responseSpec,
@@ -49,69 +49,67 @@ public final class ApiLoggingFilter implements Filter {
 	// REQUEST LOGGING
 	// ============================================================
 
-	private void logRequest(FilterableRequestSpecification request, String correlationId) {
+	private void logRequest(
+	        FilterableRequestSpecification request,
+	        String correlationId) {
 
-		StringBuilder output = new StringBuilder();
+	    String body = request.getBody() == null
+	            ? ""
+	            : maskAndTruncateBody(request.getBody().toString());
 
-		output.append("CorrelationId: ").append(correlationId).append("\n");
+	    String requestData = String.format(
+	            """
+	            CorrelationId: %s
+	            Thread: %s
+	            Method: %s
+	            URI: %s
+	            Headers: %s
+	            Body: %s
+	            """,
+	            correlationId,
+	            Thread.currentThread().getName(),
+	            request.getMethod(),
+	            request.getURI(),
+	            maskSensitiveHeaders(request.getHeaders().toString()),
+	            body
+	    );
+	    /* Store evidence for Extent Report reporting layer. */
+	    ApiEvidence.setRequest(requestData);
 
-		output.append("Thread: ").append(Thread.currentThread().getName()).append("\n");
-
-		output.append("Method: ").append(request.getMethod()).append("\n");
-
-		output.append("URI: ").append(request.getURI()).append("\n");
-
-		output.append("Headers: ").append(maskSensitiveHeaders(request.getHeaders().toString())).append("\n");
-
-		if (request.getBody() != null) {
-
-			String body = request.getBody().toString();
-
-			output.append("Body: ").append(maskAndTruncateBody(body)).append("\n");
-		}
-
-		String requestData = output.toString();
-
-		/*
-		 * Store evidence for Extent Report / reporting layer.
-		 */
-		ApiEvidence.setRequest(requestData);
-
-		log.info("API REQUEST\n{}", requestData);
+	    log.info("API REQUEST\n{}", requestData);
 	}
 
 	// ============================================================
 	// RESPONSE LOGGING
 	// ============================================================
 
-	private void logResponse(Response response, String correlationId, long duration) {
+	private void logResponse(
+	        Response response,
+	        String correlationId,
+	        long duration) {
 
-		String responseBody = response.asString();
+	    String responseData = String.format(
+	            """
+	            CorrelationId: %s
+	            Thread: %s
+	            Status: %d
+	            Time: %d ms
+	            Filter Duration: %d ms
+	            Headers: %s
+	            Body: %s
+	            """,
+	            correlationId,
+	            Thread.currentThread().getName(),
+	            response.statusCode(),
+	            response.getTime(),
+	            duration,
+	            maskSensitiveHeaders(response.getHeaders().toString()),
+	            maskAndTruncateBody(response.asString())
+	    );
 
-		StringBuilder output = new StringBuilder();
+	    ApiEvidence.setResponse(responseData);
 
-		output.append("CorrelationId: ").append(correlationId).append("\n");
-
-		output.append("Thread: ").append(Thread.currentThread().getName()).append("\n");
-
-		output.append("Status: ").append(response.statusCode()).append("\n");
-
-		output.append("Time: ").append(response.getTime()).append(" ms").append("\n");
-
-		output.append("Filter Duration: ").append(duration).append(" ms").append("\n");
-
-		output.append("Headers: ").append(maskSensitiveHeaders(response.getHeaders().toString())).append("\n");
-
-		output.append("Body: ").append(maskAndTruncateBody(responseBody)).append("\n");
-
-		String responseData = output.toString();
-
-		/*
-		 * Store response evidence for reporting.
-		 */
-		ApiEvidence.setResponse(responseData);
-
-		log.info("API RESPONSE\n{}", responseData);
+	    log.info("API RESPONSE\n{}", responseData);
 	}
 
 	
