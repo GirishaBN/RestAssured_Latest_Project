@@ -19,7 +19,7 @@ public class UserApiTest extends BaseTest {
 
 	@BeforeClass(alwaysRun = true)
 	public void setupUserService() {
-		userService = new UserService();
+	userService = new UserService();
 	}
 
 	@Test(groups = { "smoke", "regression" },dataProvider = "userData",dataProviderClass = UserDataProvider.class)
