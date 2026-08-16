@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import framework.request.RequestSpecFactory;
 import framework.request.RequestSpecManager;
 
-public class BaseTest {
+public abstract class BaseTest {
 	@BeforeMethod(alwaysRun = true)
 	public void setup() {
 		RequestSpecManager.set(RequestSpecFactory.defaultSpec());

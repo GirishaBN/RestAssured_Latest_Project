@@ -8,10 +8,12 @@ import framework.logging.FrameworkLogger;
 import framework.model.request.UserRequest;
 import framework.request.RequestSpecManager;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class UserService {
 
 	private static final Logger log = FrameworkLogger.getLogger(UserService.class);
+	RequestSpecification request = given().spec(RequestSpecManager.get());
 
 	public Response createUser(UserRequest request) {
 
@@ -53,4 +55,5 @@ public class UserService {
 		log.info("DELETE user API completed. userId={}, status={}", userId, response.statusCode());
 		return response;
 	}
+
 }

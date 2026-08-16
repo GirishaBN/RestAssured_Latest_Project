@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
 
-    <Appenders>
+	<Appenders>
 
-        <Console name="Console">
-            <PatternLayout pattern=
-                "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-        </Console>
+		<Console name="Console">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
 
-        <RollingFile
-                name="File"
-                fileName="./target/logs/api-automation.log"
-                filePattern="./target/logs/api-automation-%d{yyyy-MM-dd}-%i.log.gz">
+		<RollingFile
+			name="File"
+			fileName="./target/logs/api-automation.log"
+			filePattern="./target/logs/api-automation-%d{yyyy-MM-dd}-%i.log.gz">
 
-            <PatternLayout>
-                <Pattern>
-                    %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
-                </Pattern>
-            </PatternLayout>
+			<PatternLayout>
+				<Pattern>
+					%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} -
+					%msg%n
+				</Pattern>
+			</PatternLayout>
 
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-            </Policies>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="1 MB" />
+				<DefaultRolloverStrategy max="10" />
+			</Policies>
 
-        </RollingFile>
+		</RollingFile>
 
-    </Appenders>
+	</Appenders>
 
-    <Loggers>
+	<Loggers>
 
-        <Root level="INFO">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
-        </Root>
+		<Root level="INFO">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
 
-    </Loggers>
+	</Loggers>
 
 </Configuration>

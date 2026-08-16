@@ -62,18 +62,6 @@ public class UserApiTest extends BaseTest {
 		getResponse.then().spec(ResponseSpecFactory.getResponseSpec());
 	}
 
-	@Test(groups = { "negative", "regression" })
-	public void getUnknownUser_shouldReturnNotFound() {
-
-		Response response = userService.getUser(UserDataProvider.UNKNOWN_USER_ID);
-
-		response.then().spec(ResponseSpecFactory.notFoundResponseSpec());
-
-		String message = response.jsonPath().getString("message");
-
-		Assert.assertEquals(message, "Resource not found");
-	}
-
 	@Test(groups = { "regression" })
 	public void createGetDeleteUser_shouldCompleteSuccessfully() {
 
@@ -100,5 +88,69 @@ public class UserApiTest extends BaseTest {
 		Response deleteResponse = userService.deleteUser(userId);
 
 		deleteResponse.then().spec(ResponseSpecFactory.deleteResponseSpec());
+	}
+	
+
+	@Test(groups = { "negative", "regression" })
+	public void getUnknownUser_shouldReturnNotFound() {
+		int unknownUserId =UserDataProvider.unknownUserId();
+		
+		Response response = userService.getUser(unknownUserId);
+
+		response.then().spec(ResponseSpecFactory.notFoundResponseSpec());
+
+		String message = response.jsonPath().getString("message");
+
+		Assert.assertEquals(message, "Resource not found","Unexpected error message for unknown user");
+	}
+	
+	@Test(groups = { "negative", "regression" })
+	public void deleteUser_thenGet_shouldReturnNotFound() {
+
+	    // CREATE
+	    String uniqueId = UUID.randomUUID().toString();
+
+	    UserRequest request = new UserRequest(
+	            "deletedUser_" + uniqueId,
+	            "deletedUser_" + uniqueId + "@gmail.com",
+	            "male",
+	            "active"
+	    );
+
+	    Response createResponse = userService.createUser(request);
+
+	    createResponse
+	            .then()
+	            .spec(ResponseSpecFactory.createResponseSpec());
+
+	    int userId = createResponse.jsonPath().getInt("id");
+
+	    Assert.assertTrue(
+	            userId > 0,
+	            "Created user ID should be greater than zero"
+	    );
+
+	    // DELETE
+	    Response deleteResponse = userService.deleteUser(userId);
+
+	    deleteResponse
+	            .then()
+	            .spec(ResponseSpecFactory.deleteResponseSpec());
+
+	    // GET AFTER DELETE
+	    Response getResponse = userService.getUser(userId);
+
+	    getResponse
+	            .then()
+	            .spec(ResponseSpecFactory.notFoundResponseSpec());
+
+	    String message =
+	            getResponse.jsonPath().getString("message");
+
+	    Assert.assertEquals(
+	            message,
+	            "Resource not found",
+	            "Deleted user should not be retrievable"
+	    );
 	}
 }
